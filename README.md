@@ -1,35 +1,44 @@
+# AI Scheduler System
+Django + Celery + Redis Background Scheduler
 
-# 🤖 AI Scheduler System
+## 🎯 Company Requirements Met
+- ✅ Background scheduler (works even when server not running)
+- ✅ Uses Celery + Redis as specified
+- ✅ Automatic content generation at scheduled times
+- ✅ REST APIs for schedule management
+- ✅ Database logging for executions
 
-**Automated Content Generation System with Django, Celery & Redis**
+## 🚀 Quick Setup
 
-## 🚀 Overview
-A professional scheduling system that automatically generates content at predefined times using background workers. Built for the Python Developer role technical assessment.
+1. Install dependencies:**
+```bash
+pip install -r requirements.txt
+2. Start services (4 terminals):
 
-## ✨ Features
-- ✅ **Automated Scheduling** - Content generation at scheduled times
-- ✅ **Background Processing** - Celery workers with Redis broker
-- ✅ **RESTful APIs** - Complete CRUD operations for schedules
-- ✅ **Database Logging** - Track all executions with status
-- ✅ **Production Ready** - Scalable and reliable architecture
+# Terminal 1 - Redis
+cd Redis-x64-3.2.100
+redis-server.exe
 
-## 🛠 Tech Stack
-- **Backend:** Django, Django REST Framework
-- **Task Queue:** Celery, Redis
-- **Database:** SQLite (can be upgraded to PostgreSQL)
-- **Architecture:** Microservices-ready
+# Terminal 2 - Celery Worker  
+cd ai_scheduler
+venv\Scripts\activate
+celery -A ai_scheduler worker --pool=solo
 
-## 📋 Requirements Met
-✔ Background scheduler independent of server state  
-✔ Celery + Redis as required by company  
-✔ Automatic content generation at scheduled times  
-✔ REST APIs for schedule management  
-✔ Database storage for schedules and execution logs  
-✔ Error handling and status tracking  
+# Terminal 3 - Celery Beat
+celery -A ai_scheduler beat
 
-## 🎯 Company Requirements Fulfilled
-*"Even server is not running it should generate content on the pre scheduled time"* - ✅ Achieved with Celery background workers
+# Terminal 4 - Django Server
+python manage.py runserver
+3. Test API:
 
-*"You can use celery or redis services for this task"* - ✅ Both technologies implemented
+Open: http://127.0.0.1:8000/api/schedules/
 
-## 🏗 Project Structure
+Create schedule with future time
+
+System automatically executes at scheduled time
+
+Project Structure:
+ai_scheduler/
+├── schedules/          # Main app (models, views, tasks)
+├── ai_scheduler/      # Project config (settings, celery)
+└── requirements.txt   # Dependencies
